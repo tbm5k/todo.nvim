@@ -1,0 +1,13 @@
+print("lua file")
+-- local M = {}
+--
+-- M.setup = function (options)
+--     print('options: ', options)
+-- end
+--
+-- M.log = function(data)
+--     print('logger: ', data)
+-- end
+--
+-- return M
+--

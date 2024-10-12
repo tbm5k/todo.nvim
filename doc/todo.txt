@@ -1,0 +1,8 @@
+                                                                   *todo.nvim*
+
+
+This plugins gives you the number of todos (TODO:) you have in your file
+
+
+vim:tw=78:ts=8:ft=help:norl:
+
