@@ -1,2 +1,0 @@
-print('Todos initialization')
-
