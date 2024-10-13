@@ -5,11 +5,8 @@
 ]]--
 local M = {}
 
--- TODO
--- FIX
-
-M.patternMatcher = function(pattern)
-    
+-- TODO: write a test to this
+local patternMatcher = function(pattern)
     local bufnr = vim.api.nvim_get_current_buf()
     local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false);
 
@@ -24,7 +21,12 @@ M.patternMatcher = function(pattern)
             table.insert(result, string.format("%d: %s", key, line))
         end
     end
-    
+
+    return result, count
+end
+
+-- TODO: write a test to this
+local renderResults = function(result, pattern, count)
     vim.cmd("new")
     vim.cmd('setlocal buftype=nofile')
     vim.cmd('setlocal bufhidden=hide')
@@ -43,8 +45,19 @@ M.patternMatcher = function(pattern)
     })
 end
 
+M.findFixes = function()
+    local pattern = "FIX";
+    local results, count = patternMatcher(pattern)
+    renderResults(results, pattern, count)
+end
 
-M.patternMatcher("FIX")
+M.findTodos = function()
+    local pattern = "TODO";
+    local results, count = patternMatcher(pattern)
+    renderResults(results, pattern, count)
+end
+
+M.findTodos()
 
 return M
 
