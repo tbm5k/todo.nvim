@@ -1,8 +1,3 @@
---[[ 
--- We should be able to log the total number of todos in the file
--- We should let the user query for the new number of todos
--- We should provide a terminal with all the todos listed in the open buffer
-]]--
 local M = {}
 
 local commentFormat = function()
@@ -84,7 +79,7 @@ M.findTodos = function()
     end
 end
 
-M.findTodos()
+-- M.findTodos()
 
 return M
 
