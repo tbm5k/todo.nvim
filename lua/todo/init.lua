@@ -5,6 +5,24 @@
 ]]--
 local M = {}
 
+local commentFormat = function()
+    local type = vim.bo.filetype
+    local pattern
+
+    -- TODO: support more file types
+    if type == "lua" then
+        pattern = "^%s*%-%-"
+    elseif type == "javascript" or type == "typescript" then
+        pattern = "^%s*//"
+    elseif type == "go" then
+        pattern = "^%s*//"
+    else
+        error("Unsupported file")
+    end
+
+    return pattern
+end
+
 -- TODO: write a test to this
 local patternMatcher = function(pattern)
     local bufnr = vim.api.nvim_get_current_buf()
@@ -13,7 +31,8 @@ local patternMatcher = function(pattern)
     local result = {}
     local count = 0
 
-    local commentPattern = "^%s*%-%-" -- pattern matcher
+    local commentPattern = commentFormat()
+    -- local commentPattern = "^%s*%-%-" -- pattern matcher
 
     for key, line in ipairs(lines) do
         if line:match(commentPattern) and line:match(pattern) then
@@ -47,14 +66,22 @@ end
 
 M.findFixes = function()
     local pattern = "FIX";
-    local results, count = patternMatcher(pattern)
-    renderResults(results, pattern, count)
+    local ok, results, count = pcall(patternMatcher, pattern)
+    if ok then
+        renderResults(results, pattern, count)
+    else
+        print(results)
+    end
 end
 
 M.findTodos = function()
     local pattern = "TODO";
-    local results, count = patternMatcher(pattern)
-    renderResults(results, pattern, count)
+    local ok, results, count = pcall(patternMatcher, pattern)
+    if ok then
+        renderResults(results, pattern, count)
+    else
+        print(results)
+    end
 end
 
 M.findTodos()
